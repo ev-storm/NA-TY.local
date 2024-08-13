@@ -46,6 +46,49 @@ function animate() {
 
 animate();
 
+////////////------------ TAb --------//////////////////
+
+document.addEventListener("DOMContentLoaded", function() {
+	const words = ["выдающимися", "вдохновляющими", "запоминающимися"];
+	let i = 0;
+	let j = 0;
+	let currentWord = '';
+	let isDeleting = false;
+	const spanElement = document.getElementById('changing-text');
+
+	function typeWriter() {
+			const fullWord = words[i];
+
+			if (isDeleting) {
+					currentWord = fullWord.substring(0, currentWord.length - 1);
+			} else {
+					currentWord = fullWord.substring(0, currentWord.length + 1);
+			}
+
+			spanElement.textContent = currentWord;
+
+			let typingSpeed = 150;
+
+			if (isDeleting) {
+					typingSpeed /= 2;
+			}
+
+			if (!isDeleting && currentWord === fullWord) {
+					typingSpeed = 2000;
+					isDeleting = true;
+			} else if (isDeleting && currentWord === '') {
+					isDeleting = false;
+					i = (i + 1) % words.length;
+					typingSpeed = 500;
+			}
+
+			setTimeout(typeWriter, typingSpeed);
+	}
+
+	typeWriter();
+});
+
+
 ////////////------------SCROLL--------//////////////////
 
 window.addEventListener('scroll', function() {
@@ -53,6 +96,7 @@ window.addEventListener('scroll', function() {
 	const innerCircle = document.getElementById('inner-circle');
 	const menuDark = document.getElementById('menu-dark');
 	const logoDark = document.getElementById('logo-dark');
+	const about = document.getElementById('about');
   const scrollPosition = window.scrollY;
 
 
@@ -68,5 +112,30 @@ window.addEventListener('scroll', function() {
 	innerCircle.style.opacity = (100 - scrollPosition * 0.1) + '%';
 	menuDark.style.opacity = (100 - scrollPosition * 0.3) + '%';
 	logoDark.style.opacity = (100 - scrollPosition * 0.15) + '%';
-
+	
 });
+
+
+function isElementInViewport(el) {
+	const rect = el.getBoundingClientRect();
+	return (
+			rect.top >= 0 &&
+			rect.left >= 0 &&
+			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+			rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+	);
+}
+
+
+function onScroll() {
+	const items = document.querySelectorAll('.about__item');
+	items.forEach(item => {
+			if (isElementInViewport(item)) {
+					item.classList.add('visible');
+			}
+	});
+}
+
+window.addEventListener('scroll', onScroll);
+document.addEventListener('DOMContentLoaded', onScroll);
+

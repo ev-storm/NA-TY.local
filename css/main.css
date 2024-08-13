@@ -125,8 +125,11 @@ a {
 	display: flex;
 	justify-content: end;
 	align-items: end;
-	padding: 10vw;
+	padding: 10vw 0;
 	gap: 24px;
+}
+.title > div > h1{
+	margin-right: 10vw;
 }
 .title > div > h2 > span{
 	font-style: italic;
@@ -149,6 +152,7 @@ a {
 	transition: all 0.3s ease;
 }
 
+
 /*--------- ABOUT --------- */
 .about{
 	position: relative;
@@ -167,6 +171,16 @@ a {
 	width: 438px;
 	gap: 16px;
 	margin-bottom: 30px;
+	opacity: 0;
+	transform: scale(0); 
+	transition: transform 0.5s, opacity 0.5s;
+	transform: translateX(-100px);
+}
+.about__item.visible {
+	opacity: 1; 
+	transform: scale(1); 
+	transform: translateX(0);
+	transition: transform 0.5s, opacity 0.5s;
 }
 
 .about__item-img{
@@ -190,6 +204,7 @@ a {
 	font-weight: 100;
 	line-height: 20px;
 }
+
 
 footer{
 	display: flex;
